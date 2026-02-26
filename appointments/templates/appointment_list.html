@@ -1,0 +1,26 @@
+<h2>Appointment List</h2>
+
+<a href="/create/">Create Appointment</a>
+
+<table border="1">
+<tr>
+    <th>Patient</th>
+    <th>Doctor</th>
+    <th>Date</th>
+    <th>Time</th>
+    <th>Action</th>
+</tr>
+
+{% for appointment in appointments %}
+<tr>
+    <td>{{ appointment.patient.name }}</td>
+    <td>{{ appointment.doctor.name }}</td>
+    <td>{{ appointment.date }}</td>
+    <td>{{ appointment.time }}</td>
+    <td>
+        <a href="/delete/{{ appointment.id }}">Delete</a>
+    </td>
+</tr>
+{% endfor %}
+
+</table>
