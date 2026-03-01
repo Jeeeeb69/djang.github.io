@@ -16,9 +16,18 @@ class Doctor(models.Model):
         return self.name
 
 class Appointment(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='appointments')
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='appointments')
+    patient = models.ForeignKey(
+        Patient, 
+        on_delete=models.CASCADE, 
+        related_name='appointments'
+    )
+    doctor = models.ForeignKey(
+        Doctor, 
+        on_delete=models.CASCADE, 
+        related_name='appointments'
+    )
     appointment_date = models.DateTimeField()
+    status = models.CharField(max_length=50, default="pending")  # new field
 
     def __str__(self):
-        return f"{self.patient.name} with {self.doctor.name} on {self.appointment_date}"
+        return f"{self.patient.name} with {self.doctor.name} on {self.appointment_date} ({self.status})"

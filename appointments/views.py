@@ -1,41 +1,19 @@
-from rest_framework import generics
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework import viewsets
 from .models import Patient, Doctor, Appointment
 from .serializers import PatientSerializer, DoctorSerializer, AppointmentSerializer
+from django.shortcuts import render
 
-# Patients
-class PatientListCreateView(generics.ListCreateAPIView):
+def home(request):
+    return render(request, 'appointments/home.html')
+
+class PatientViewSet(viewsets.ModelViewSet):
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
 
-class PatientRetrieveDestroyView(generics.RetrieveDestroyAPIView):
-    queryset = Patient.objects.all()
-    serializer_class = PatientSerializer
-
-# Doctors
-class DoctorListCreateView(generics.ListCreateAPIView):
+class DoctorViewSet(viewsets.ModelViewSet):
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
 
-class DoctorRetrieveDestroyView(generics.RetrieveDestroyAPIView):
-    queryset = Doctor.objects.all()
-    serializer_class = DoctorSerializer
-
-# Appointments
-class AppointmentListCreateView(generics.ListCreateAPIView):
+class AppointmentViewSet(viewsets.ModelViewSet):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
-
-class AppointmentRetrieveDestroyView(generics.RetrieveDestroyAPIView):
-    queryset = Appointment.objects.all()
-    serializer_class = AppointmentSerializer
-
-# API root for /api/
-@api_view(['GET'])
-def api_root(request):
-    return Response({
-        "patients": "/api/patients/",
-        "doctors": "/api/doctors/",
-        "appointments": "/api/appointments/"
-    })
